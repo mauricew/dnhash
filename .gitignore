@@ -106,3 +106,6 @@ settings_private.py
 
 # sqlite development database
 *.sqlite3
+
+# External data
+/msdn/data
