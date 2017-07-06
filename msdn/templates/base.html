@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width;initial-scale=1.0">
+    <title>{% block title %}{% endblock %}msdnhash</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.3/css/bulma.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <nav class="navbar" style="border-bottom:1px solid #ddd;">
+        <div class="container">
+            <div class="navbar-brand">
+                <a class="navbar-item" href="/" style="font-size:1.25rem;font-weight:600;">
+                    msdnhash
+                </a>
+                <a class="navbar-item" href="/browse">
+                    Browse
+                </a>
+                <a class="navbar-item" href="/about">
+                    About
+                </a>
+            </div>
+        </div>
+    </nav>
+    {% block content %}
+    {% endblock content %}
+    <footer class="footer">
+        <div class="container content">
+            &copy;2017 msdnhash.
+            This site is in no way affiliated with Microsoft Corporation.
+            <a href="https://github.com/mauricew/msdnhash" target="_blank">
+                <i class="fa fa-github" style="vertical-align: baseline;"></i> Github
+            </a>
+        </div>
+    </footer>
+</body>
+</html>

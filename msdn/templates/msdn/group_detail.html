@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}{{group.name}} | {% endblock %}
+{% block content %}
+    <section class="section container content">
+        <h2>{{group.name}}</h2>
+
+        <table class="table">
+            <thead>
+                <th>Name</th>
+            </thead>
+            <tbody>
+                {% for f in families %}
+                <tr>
+                    <td>
+                        <a href="{% url 'family_detail' f.id %}">{{f.name}}</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+{% endblock content %}

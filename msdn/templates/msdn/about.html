@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block title %}About | {% endblock %}
+{% block content %}
+<section class="container content section">
+    <h1>About</h1>
+
+    <p>
+        In June 2017, the aging <abbr title="Microsoft Developer Network">MSDN</abbr> subscriber portal was "taken offline", with the new Visual Studio Subcription portal only being accessible to subscribers.
+        While the old portal still works after a few DOM changes, it's not guaranteed how long it will stay up.
+        This project aims to preserve the always publicly available MSDN hashes for reference purposes and make them easier to search with just the SHA-1 hash.
+    </p>
+
+    <p>
+        This site depends on external data, which is updated on an ad-hoc basis.
+        There will be a delay between when new files are released by Microsoft before they show up here.<br/>
+        Additionally, there are certain fields that are not easily filterable with the provided data, e.g. architecture (x86/x64).
+    </p>
+</section>
+{% endblock content %}

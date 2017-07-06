@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %}{{file.description}} | {% endblock %}
+{% block content %}
+    <section class="section container">
+        <nav class="breadcrumb">
+            <ul>
+                <li>
+                    <a href="{% url 'group_detail' file.product_family.group.id %}">{{file.product_family.group.name}}</a>
+                </li>
+                <li>
+                    <a href="{% url 'family_detail' file.product_family.id %}">{{file.product_family.name}}</a>
+                </li>
+            </ul>
+        </nav>
+        <div class="content">
+            <h3 class="title">{{file.description}}</h3>
+            <p class="subtitle">{{file.file_name}}</p>
+            <dl>
+                <dt>SHA1 hash</dt>
+                <dd>{{file.sha1_hash | lower }}</dd>
+                <dt>File size</dt>
+                <dd>{{file.size | floatformat:'-3'}} MB</dd>
+                <dt>Date posted</dt>
+                <dd>{{file.posted_date | date:'Y-m-d H:i'}}</dd>
+            </dl>
+            {% if file.notes is not None %}
+            <div class="box">
+                {{file.notes|safe}}
+            </div>
+            {% endif %}
+        </div>
+    </section>
+{% endblock content %}

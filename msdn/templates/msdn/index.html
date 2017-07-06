@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block content %}
+    <section class="hero is-light">
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title">Hi there.</h1>
+            </div>
+        </div>
+    </section>
+    <section class="section container content">
+        <div class="columns">
+            <div class="column">
+                <h3>Latest files</h3>
+                <ul>
+                    {% for f in latest_files %}
+                    <li>
+                        <a href="{% url 'file_detail' f.id %}">{{f.description}}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="column">
+                <h3>Browse groups</h3>
+                <ul>
+                    {% for g in groups %}
+                    <li>
+                        <a href="{% url 'group_detail' g.id %}">{{g.name}}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </section>
+{% endblock content %}

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %}Browse groups | {% endblock %}
+{% block content %}
+<section class="section container content">
+    <h2>Browse groups</h2>
+    {% for g in groups %}
+    <div class="box">
+        <h4 style="margin: 0;">
+            <a href="{% url 'group_detail' g.id %}">{{g.name}}</a>
+        </h4>
+    </div>
+    {% endfor %}
+</section>
+{% endblock content %}

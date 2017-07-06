@@ -16,6 +16,14 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
+from msdn import views
+
 urlpatterns = [
+    url(r'^$', views.index, name='index'),
+    url(r'^about', views.about, name='about'),
+    url(r'^browse', views.browse_groups, name='browse'),
+    url(r'^groups/(?P<group_id>[0-9]+)$', views.group_detail, name='group_detail'),
+    url(r'^families/(?P<family_id>[0-9]+)$', views.family_detail, name='family_detail'),
+    url(r'^files/(?P<file_id>[0-9]+)$', views.file_detail, name='file_detail'),
     url(r'^admin/', admin.site.urls),
 ]

@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}{{family.name}} | {% endblock %}
+{% block content %}
+<section class="section content container">
+    <div class="breadcrumb">
+        <a href="{% url 'group_detail' family.group.id %}">&laquo; {{family.group.name}}</a>
+    </div>
+    <h3>{{family.name}}</h3>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Size</th>
+                <th>Posted Date</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for file in files %}
+            <tr>
+                <td>
+                    <a href="{% url 'file_detail' file.id %}">{{file.description}}</a>
+                </td>
+                <td>{{file.size | floatformat:'-3'}} MB</td>
+                <td>{{file.posted_date | date:'Y-m-d H:i'}}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</section>
+
+{% endblock content %}
