@@ -30,6 +30,7 @@ class File(models.Model):
     file_name = models.CharField(max_length=1024)
     sha1_hash = models.CharField(max_length=40)
     description = models.CharField(max_length=1024)
+    language = models.ForeignKey('Language', null=True)
     notes = models.TextField(null=True)
     posted_date = models.DateTimeField()
     size = models.DecimalField(max_digits=12, decimal_places=3)

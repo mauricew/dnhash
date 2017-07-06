@@ -14,6 +14,12 @@ class Command(BaseCommand):
         DATA_DIR = os.path.join(BASE_DIR, 'data')
         FAMILY_DATA_DIR = os.path.join(DATA_DIR, 'families')
 
+        # English is number one!
+        en = Language()
+        en.code = 'en'
+        en.name = 'English'
+        en.save()
+
         categories = []
 
         with open(os.path.join(DATA_DIR, 'categories.json')) as cat_file:
@@ -67,6 +73,17 @@ class Command(BaseCommand):
                     file_obj.product_key_required = file['IsProductKeyRequired']
                     file_obj.sha1_hash = file['Sha1Hash']
 
+                    if file['Languages'] and len(file['Languages']) == 1:
+                        lang_code = file['LanguageCodes'][0]
+                        lang = Language.objects.filter(code=lang_code)
+                        if not lang:
+                            new_lang = Language()
+                            new_lang.code = file['LanguageCodes'][0]
+                            new_lang.name = file['Languages'][0]
+                            new_lang.save()
+                            file_obj.language = new_lang
+                        else:
+                            file_obj.language = lang[0]
 
                     date_str = re.findall(r'\d+', file['PostedDate'])
                     if len(date_str) > 0:
@@ -74,6 +91,7 @@ class Command(BaseCommand):
 
                     size = file['Size'][:-3]
                     file_obj.size = size
+
                     files.append(file_obj)
 
         File.objects.bulk_create(files)
