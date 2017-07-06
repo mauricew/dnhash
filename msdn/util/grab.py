@@ -1,6 +1,5 @@
 import json, os, time
 import requests
-from . import *
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_DIR = os.path.join(BASE_DIR, 'data')
@@ -52,7 +51,7 @@ def main():
     for cat in base_categories:
         if cat['Name'] != ' New Products':
             group_id = cat['ProductGroupId']
-            print(cat['Name'] + ": ")
+            print('Dumping ' + cat['Name'])
 
             cur_group_families = get_families(group_id)
 
@@ -61,24 +60,24 @@ def main():
                 f['ProductGroupId'] = group_id
                 fam_id = f['ProductFamilyId']
                 #print("Dumping %s" % f['Title'])
-                #prf = open(os.path.join(FAMILY_DATA_DIR, '%d.json' % fam_id), 'w')
+                prf = open(os.path.join(FAMILY_DATA_DIR, '%d.json' % fam_id), 'w')
 
-                # page_num = 0
-                # fam_files = []
-                #
-                # while True:
-                #     family_file_search = get_files(fam_id, page_num)
-                #     fam_files_curpage = family_file_search['Files']
-                #     fam_files = fam_files + fam_files_curpage
-                #
-                #     if not family_file_search['Files'] or family_file_search['TotalResults'] < PAGE_SIZE:
-                #         break
-                #     page_num += 1
-                #
-                # prf.write(json.dumps(fam_files))
-                # prf.close()
-                # fam_files = []
-                # time.sleep(DELAY_PER_FAMILY)
+                page_num = 0
+                fam_files = []
+
+                while True:
+                    family_file_search = get_files(fam_id, page_num)
+                    fam_files_curpage = family_file_search['Files']
+                    fam_files = fam_files + fam_files_curpage
+
+                    if not family_file_search['Files'] or family_file_search['TotalResults'] < PAGE_SIZE:
+                        break
+                    page_num += 1
+
+                prf.write(json.dumps(fam_files))
+                prf.close()
+                fam_files = []
+                time.sleep(DELAY_PER_FAMILY)
 
             families += cur_group_families
 
