@@ -49,21 +49,16 @@ class Command(BaseCommand):
         ProductFamily.objects.bulk_create(families)
 
         files = []
-
-        # There are 3 files that overlap categories at the moment.
-        # Quicker & easier to check them here.
-        duped = {14547: False, 37002: False, 36987: False}
+        imported_file_ids = []
 
         for file_listing_fname in [os.path.join(os.path.abspath(FAMILY_DATA_DIR), f) for f in os.listdir(FAMILY_DATA_DIR)]:
             with open(file_listing_fname) as file_listing_file:
                 j_files = json.load(file_listing_file)
 
                 for file in j_files:
-                    if file['FileId'] in duped:
-                        if not duped[file['FileId']]:
-                            duped[file['FileId']] = True
-                        else:
-                            continue
+                    if file['FileId'] in imported_file_ids:
+                        continue
+
                     file_obj = File()
                     file_obj.id = file['FileId']
                     file_obj.file_name = file['FileName']
@@ -93,5 +88,6 @@ class Command(BaseCommand):
                     file_obj.size = size
 
                     files.append(file_obj)
+                    imported_file_ids.append(file_obj.id)
 
         File.objects.bulk_create(files)
