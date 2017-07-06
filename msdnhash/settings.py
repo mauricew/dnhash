@@ -24,9 +24,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = settings_private.secret
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = settings_private.debug
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = settings_private.allowed_hosts
 
 
 # Application definition
