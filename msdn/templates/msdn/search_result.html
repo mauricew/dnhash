@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block title %}Search results | {% endblock %}
+{% block content %}
+<section class="section container">
+    <div class="content">
+        <h2>Search results</h2>
+        {% if not search_results %}
+        <p>Nothing found.</p>
+        {% else %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>File name</th>
+                    <th>SHA-1 hash</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for f in search_results %}
+                <tr>
+                    <td>
+                        <a href="{% url 'file_detail' f.id %}">{{f.description}}</a>
+                    </td>
+                    <td>
+                        {{f.file_name}}
+                    </td>
+                    <td>
+                        {{f.sha1_hash}}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+    </div>
+</section>
+{% endblock content %}

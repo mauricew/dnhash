@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Max
 
 # Create your views here.
@@ -8,9 +8,11 @@ from .models import File, ProductGroup, ProductFamily
 def index(request):
     latest_files = File.objects.order_by("-posted_date")[:10]
     groups = ProductGroup.objects.order_by("name")
+    total_count = File.objects.count()
 
-    context = {'latest_files': latest_files, 'groups': groups}
+    context = {'latest_files': latest_files, 'groups': groups, 'total_count': total_count}
     return render(request, 'msdn/index.html', context)
+
 
 def about(request):
     return render(request, 'msdn/about.html')
@@ -44,3 +46,17 @@ def file_detail(request, file_id):
 
     context = {'file': file_obj}
     return render(request, 'msdn/file_detail.html', context)
+
+
+def search_by_hash(request):
+    hash_start = request.GET.get('hash_start')
+    if not hash_start:
+        files_matching = []
+    else:
+        files_matching = File.objects.filter(sha1_hash__startswith=hash_start)
+
+    if len(files_matching) == 1:
+        return redirect('file_detail', files_matching[0].id)
+
+    context = {'search_results': files_matching}
+    return render(request, 'msdn/search_result.html', context)

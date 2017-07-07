@@ -2,8 +2,26 @@
 {% block content %}
     <section class="hero is-light">
         <div class="hero-body">
-            <div class="container">
-                <h1 class="title">Hi there.</h1>
+            <div class="container has-text-centered">
+                <h1 class="title">
+                    <strong>{{total_count}}</strong>
+                    files indexed from the MSDN subscriptions catalog
+                </h1>
+                <form method="get" action="/search">
+                    <div class="field has-addons">
+                        <p class="control is-expanded">
+                            <input type="text" class="input is-medium" name="hash_start" required minlength="4" pattern="[0-9a-f]+"
+                               placeholder="Type the first 4 or more characters of the SHA-1 hash" />
+                        </p>
+                        <p class="control">
+                            <button type="submit" class="button is-medium is-primary">
+                                <i class="fa fa-search"></i>
+                                &nbsp;
+                                Search
+                            </button>
+                        </p>
+                    </div>
+                </form>
             </div>
         </div>
     </section>
