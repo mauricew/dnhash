@@ -11,8 +11,8 @@
         <thead>
             <tr>
                 <th>Name</th>
-                <th>Size</th>
                 <th>Posted Date</th>
+                <th style="text-align: right;">Size</th>
             </tr>
         </thead>
         <tbody>
@@ -21,8 +21,8 @@
                 <td>
                     <a href="{% url 'file_detail' file.id %}">{{file.description}}</a>
                 </td>
-                <td>{{file.size | floatformat:'-3'}} MB</td>
-                <td>{{file.posted_date | date:'Y-m-d H:i'}}</td>
+                <td style="white-space: nowrap;">{{file.posted_date | date:'Y-m-d H:i'}}</td>
+                <td class="has-text-right" style="white-space: nowrap;">{{file.size | floatformat:'-3'}} MB</td>
             </tr>
         {% endfor %}
         </tbody>

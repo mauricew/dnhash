@@ -35,7 +35,7 @@ def group_detail(request, group_id):
 
 def family_detail(request, family_id):
     family = get_object_or_404(ProductFamily, pk=family_id)
-    files = File.objects.filter(product_family_id= family.id).order_by("-posted_date")
+    files = File.objects.filter(product_family_id= family.id).order_by("-posted_date", "description")
 
     context = {'family': family, 'files': files}
     return render(request, 'msdn/family_detail.html', context)

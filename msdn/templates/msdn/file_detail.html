@@ -22,8 +22,10 @@
                 <dd>{{file.size | floatformat:'-3'}} MB</dd>
                 <dt>Date posted</dt>
                 <dd>{{file.posted_date | date:'Y-m-d H:i'}}</dd>
+                {% if file.language is not None %}
                 <dt>Language</dt>
                 <dd>{{file.language.name}}</dd>
+                {% endif %}
             </dl>
             {% if file.notes is not None %}
             <div class="box">
