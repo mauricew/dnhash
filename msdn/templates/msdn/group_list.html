@@ -5,9 +5,10 @@
     <h2>Browse groups</h2>
     {% for g in groups %}
     <div class="box">
-        <h4 style="margin: 0;">
+        <h4>
             <a href="{% url 'group_detail' g.id %}">{{g.name}}</a>
         </h4>
+        <h6 style="margin-bottom: 0;">{{g.productfamily__count}} products in this group</h6>
     </div>
     {% endfor %}
 </section>

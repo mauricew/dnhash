@@ -7,12 +7,20 @@
         <table class="table">
             <thead>
                 <th>Name</th>
+                <th style="text-align: right;"># of files</th>
+                <th style="text-align: right;">Last file posted</th>
             </thead>
             <tbody>
                 {% for f in families %}
                 <tr>
                     <td>
                         <a href="{% url 'family_detail' f.id %}">{{f.name}}</a>
+                    </td>
+                    <td class="has-text-right">
+                        {{f.file__count}}
+                    </td>
+                    <td class="has-text-right">
+                        {{f.file__posted_date__max | date:'Y-m-d H:i'}}
                     </td>
                 </tr>
                 {% endfor %}

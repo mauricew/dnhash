@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.db.models import Max
+from django.db.models import Max, Count
 
 # Create your views here.
 from .models import File, ProductGroup, ProductFamily
@@ -19,7 +19,7 @@ def about(request):
 
 
 def browse_groups(request):
-    groups = ProductGroup.objects.order_by("name")
+    groups = ProductGroup.objects.annotate(Count('productfamily')).order_by("name")
 
     context = {'groups': groups}
     return render(request, 'msdn/group_list.html', context)
@@ -27,7 +27,7 @@ def browse_groups(request):
 
 def group_detail(request, group_id):
     group = get_object_or_404(ProductGroup, pk=group_id)
-    families = ProductFamily.objects.filter(group_id=group_id).order_by("name")
+    families = ProductFamily.objects.filter(group_id=group_id).annotate(Count('file'), Max('file__posted_date')).order_by("name")
 
     context = {'group': group, 'families': families}
     return render(request, 'msdn/group_detail.html', context)
