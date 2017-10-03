@@ -27,9 +27,14 @@
                 <dd>{{file.language.name}}</dd>
                 {% endif %}
             </dl>
-            {% if file.notes is not None %}
-            <div class="box">
-                {{file.notes|safe}}
+            {% if file.notes %}
+            <div class="message">
+                <div class="message-header">
+                    <p>Notes</p>
+                </div>
+                <div class="message-body">
+                    {{file.notes|safe}}
+                </div>
             </div>
             {% endif %}
         </div>

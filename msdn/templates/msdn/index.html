@@ -5,9 +5,9 @@
             <div class="container has-text-centered">
                 <h1 class="title">
                     <strong>{{total_count}}</strong>
-                    files indexed from the MSDN subscriptions catalog
+                    <span class="has-text-weight-normal">files indexed from the MSDN subscriptions catalog</span>
                 </h1>
-                <form method="get" action="/search">
+                <form method="get" action="/search" class="is-hidden-mobile">
                     <div class="field has-addons">
                         <p class="control is-expanded">
                             <input type="text" class="input is-medium" name="hash_start" required minlength="4" pattern="[0-9a-f]+"
