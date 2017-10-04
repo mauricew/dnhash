@@ -28,6 +28,8 @@ DEBUG = settings_private.debug
 
 ALLOWED_HOSTS = settings_private.allowed_hosts
 
+if hasattr(settings_private, 'google_analytics_code'):
+    GOOGLE_ANALYTICS_CODE = settings_private.google_analytics_code
 
 # Application definition
 
@@ -65,6 +67,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'msdn.context_processors.google_analytics',
             ],
         },
     },
