@@ -1,7 +1,7 @@
 msdnhash
 =============
 In June 2017, the MSDN subscriber portal was "taken offline", with the new Visual Studio portal only being open to subscribers.
-While the old portal still works after a few DOM changes, it's not guaranteed how long it will stay up.
+While it worked for a few months after showing/hiding some DOM elements, it was finally completely removed in October 2017.  
 This project aims to preserve MSDN's catalog of files for reference purposes.
 
 ### Instructions
