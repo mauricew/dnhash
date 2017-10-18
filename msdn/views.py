@@ -3,11 +3,15 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Max, Count
 
 # Create your views here.
-from .models import File, ProductGroup, ProductFamily
+from .models import File, Language, ProductGroup, ProductFamily
 
 
 def index(request):
     latest_files = File.objects.order_by("-posted_date")[:10]
+    latest_updated_families = ProductFamily.objects \
+        .annotate(last_posted_date=Max('file__posted_date')) \
+        .order_by('-last_posted_date')[:10]
+
     groups = ProductGroup.objects.order_by("name")
     total_count = File.objects.count()
 
@@ -17,6 +21,7 @@ def index(request):
     context = {
         'show_fcu_banner': show_fcu_banner,
         'latest_files': latest_files,
+        'latest_updated_families': latest_updated_families,
         'groups': groups, 'total_count': total_count,
     }
     return render(request, 'msdn/index.html', context)
@@ -35,7 +40,9 @@ def browse_groups(request):
 
 def group_detail(request, group_id):
     group = get_object_or_404(ProductGroup, pk=group_id)
-    families = ProductFamily.objects.filter(group_id=group_id).annotate(Count('file'), Max('file__posted_date')).order_by("name")
+    families = ProductFamily.objects.filter(group_id=group_id) \
+        .annotate(Count('file'), Max('file__posted_date')) \
+        .order_by("name")
 
     context = {'group': group, 'families': families}
     return render(request, 'msdn/group_detail.html', context)
@@ -44,8 +51,18 @@ def group_detail(request, group_id):
 def family_detail(request, family_id):
     family = get_object_or_404(ProductFamily, pk=family_id)
     files = File.objects.filter(product_family_id= family.id).order_by("-posted_date", "description")
+    file_languages = Language.objects.filter(file__product_family_id= family.id).order_by('name').distinct()
 
-    context = {'family': family, 'files': files}
+    lang = request.GET.get('lang')
+    if lang:
+        files = files.filter(language__code=lang)
+
+    context = {
+        'family': family,
+        'files': files,
+        'file_languages': file_languages,
+        'selected_language': lang,
+    }
     return render(request, 'msdn/family_detail.html', context)
 
 

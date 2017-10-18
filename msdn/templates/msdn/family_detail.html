@@ -5,7 +5,22 @@
     <div class="breadcrumb">
         <a href="{% url 'group_detail' family.group.id %}">&laquo; {{family.group.name}}</a>
     </div>
-    <h3>{{family.name}}</h3>
+
+    <div class="level">
+        <div class="level-left">
+            <h3 class="is-marginless">{{family.name}}</h3>
+        </div>
+        <form class="level-right" method="get">
+            <div class="select">
+                <select name="lang" onchange="this.form.submit()" style="margin-left: auto;">
+                    <option value {% if not selected_language %}selected{%endif%}>All languages</option>
+                    {% for l in file_languages %}
+                    <option value="{{l.code}}" {% if selected_language == l.code %}selected{% endif %}>{{l.name}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </form>
+    </div>
 
     <table class="table">
         <thead>
