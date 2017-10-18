@@ -1,3 +1,4 @@
+import datetime
 from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Max, Count
 
@@ -10,7 +11,14 @@ def index(request):
     groups = ProductGroup.objects.order_by("name")
     total_count = File.objects.count()
 
-    context = {'latest_files': latest_files, 'groups': groups, 'total_count': total_count}
+    fcu_banner_expiration_date = datetime.date(2017, 11, 10)
+    show_fcu_banner = datetime.date.today() < fcu_banner_expiration_date
+
+    context = {
+        'show_fcu_banner': show_fcu_banner,
+        'latest_files': latest_files,
+        'groups': groups, 'total_count': total_count,
+    }
     return render(request, 'msdn/index.html', context)
 
 
