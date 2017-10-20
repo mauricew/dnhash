@@ -2,11 +2,22 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width;initial-scale=1.0">
-    <meta name="description" content="Lookup and verify files using their SHA1 hash from the MSDN catalog"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="description" content="Lookup and verify files using their SHA1 hash from the MSDN catalog.">
     <title>{% block title %}{% endblock %}msdnhash</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.3/css/bulma.min.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    {% if GOOGLE_ANALYTICS_CODE %}
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{GOOGLE_ANALYTICS_CODE}}"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', '{{GOOGLE_ANALYTICS_CODE}}');
+    </script>
+    {% endif %}
 </head>
 <body>
     <nav class="navbar has-shadow">
@@ -35,15 +46,5 @@
             </a>
         </div>
     </footer>
-    {% if GOOGLE_ANALYTICS_CODE %}
-    <script async src="https://www.googletagmanager.com/gtag/js?id={{GOOGLE_ANALYTICS_CODE}}"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', '{{GOOGLE_ANALYTICS_CODE}}');
-    </script>
-    {% endif %}
 </body>
 </html>
