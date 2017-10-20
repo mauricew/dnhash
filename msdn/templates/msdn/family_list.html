@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block title %}All Products | {% endblock %}
+{% block content %}
+<section class="section container content">
+    <h2 class="is-inline-block-tablet" style="margin-right: 8px;">
+        All Products
+        <small class="is-block-mobile is-inline-block-tablet" style="font-size: 0.5em;">starting with <strong class="is-hidden-tablet">{{first_letter}}</strong></small>
+    </h2>
+    <span class="select">
+        <form method="get">
+            <select name="start_letter" onchange="this.form.submit();">
+                {% for l in all_letters %}
+                <option value="{{l}}" {% if l == first_letter %}selected{% endif %}>{{l|title}}</option>
+                {% endfor %}
+            </select>
+        </form>
+    </span>
+    {% if not families %}
+    <p>Nothing found.</p>
+    {% else %}
+    <table>
+        <thead>
+            <tr>
+                <th>Product name</th>
+                <th>Group</th>
+                <th class="has-text-right"># of files</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for f in families %}
+            <tr>
+                <th>
+                    <a href="{% url 'family_detail' f.id %}">{{f.name}}</a>
+                </th>
+                <td>
+                    <a href="{% url 'group_detail' f.group.id %}">{{f.group.name}}</a>
+                </td>
+                <td class="has-text-right">
+                    {{f.file__count}}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+</section>
+{% endblock content %}

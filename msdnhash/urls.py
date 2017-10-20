@@ -24,6 +24,7 @@ urlpatterns = [
     url(r'^browse', views.browse_groups, name='browse'),
     url(r'^search', views.search_by_hash, name='search_result'),
     url(r'^groups/(?P<group_id>[0-9]+)$', views.group_detail, name='group_detail'),
+    url(r'^families/$', views.family_list, name='family_list'),
     url(r'^families/(?P<family_id>[0-9]+)$', views.family_detail, name='family_detail'),
     url(r'^files/(?P<file_id>[0-9]+)$', views.file_detail, name='file_detail'),
     url(r'^admin/', admin.site.urls),

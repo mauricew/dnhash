@@ -3,6 +3,12 @@
 {% block content %}
 <section class="section container content">
     <h2>Browse groups</h2>
+    <div class="box">
+        <h2>
+            <a href="{% url 'family_list' %}?start_letter=a">All Products</a>
+            <h6 style="margin-bottom: 0;">Browse {{all_family_count}} products by starting letter</h6>
+        </h2>
+    </div>
     {% for g in groups %}
     <div class="box">
         <h4>

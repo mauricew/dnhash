@@ -1,4 +1,5 @@
 import datetime
+import string
 from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Max, Count
 
@@ -33,10 +34,26 @@ def about(request):
 
 def browse_groups(request):
     groups = ProductGroup.objects.annotate(Count('productfamily')).order_by("name")
+    all_family_count = ProductFamily.objects.count()
 
-    context = {'groups': groups}
+    context = {'groups': groups, 'all_family_count': all_family_count}
     return render(request, 'msdn/group_list.html', context)
 
+
+def family_list(request):
+    start_letter = request.GET.get('start_letter')
+    if start_letter:
+        first_letter = start_letter[0]
+    else:
+        first_letter = 'a'
+
+    families = ProductFamily.objects \
+        .prefetch_related('group') \
+        .filter(name__startswith=first_letter).order_by('name') \
+        .annotate(Count('file'))
+
+    context = {'families': families, 'first_letter': first_letter, 'all_letters': string.ascii_lowercase}
+    return render(request, 'msdn/family_list.html', context)
 
 def group_detail(request, group_id):
     group = get_object_or_404(ProductGroup, pk=group_id)

@@ -52,6 +52,11 @@
             <div class="column">
                 <h3>Browse groups</h3>
                 <ul>
+                    <li>
+                        <a href="{% url 'family_list' %}?start_letter=a">
+                            <strong>All Products</strong>
+                        </a>
+                    </li>
                     {% for g in groups %}
                     <li>
                         <a href="{% url 'group_detail' g.id %}">{{g.name}}</a>
