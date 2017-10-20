@@ -49,7 +49,7 @@ def family_list(request):
 
     families = ProductFamily.objects \
         .prefetch_related('group') \
-        .filter(name__startswith=first_letter).order_by('name') \
+        .filter(name__istartswith=first_letter).order_by('name') \
         .annotate(Count('file'))
 
     context = {'families': families, 'first_letter': first_letter, 'all_letters': string.ascii_lowercase}
