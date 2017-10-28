@@ -1,12 +1,30 @@
 {% extends 'base.html' %}
 {% block title %}Search results | {% endblock %}
 {% block content %}
+<style type="text/css">
+    td.overflow-cell {
+        max-width: 500px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    td.overflow-cell:hover {
+        white-space: normal;
+        text-overflow: unset;
+        overflow: visible;
+        word-wrap: break-word;
+    }
+</style>
 <section class="section container">
     <div class="content">
         <h2>Search results</h2>
         {% if not search_results %}
         <p>Nothing found.</p>
         {% else %}
+        {% if too_many_results %}
+        <p>Showing first 100 results.</p>
+        {% else %}
+        <p>Showing {{search_results | length}} results</p>
+        {% endif %}
         <table class="table">
             <thead>
                 <tr>
@@ -21,7 +39,7 @@
                     <td>
                         <a href="{% url 'file_detail' f.id %}">{{f.description}}</a>
                     </td>
-                    <td>
+                    <td class="overflow-cell">
                         {{f.file_name}}
                     </td>
                     <td>

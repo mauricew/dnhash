@@ -1,7 +1,7 @@
 import datetime
 import string
 from django.shortcuts import render, get_object_or_404, redirect
-from django.db.models import Max, Count
+from django.db.models import Max, Count, Q
 
 # Create your views here.
 from .models import File, Language, ProductGroup, ProductFamily
@@ -90,15 +90,17 @@ def file_detail(request, file_id):
     return render(request, 'msdn/file_detail.html', context)
 
 
-def search_by_hash(request):
-    hash_start = request.GET.get('hash_start')
-    if not hash_start:
+def search_result(request):
+    query = request.GET.get('q')
+    if not query:
         files_matching = []
     else:
-        files_matching = File.objects.filter(sha1_hash__startswith=hash_start)
+        files_matching = File.objects.filter(Q(sha1_hash__istartswith=query) | Q(file_name__istartswith=query))
+
 
     if len(files_matching) == 1:
         return redirect('file_detail', files_matching[0].id)
+    too_many_results = files_matching.count() > 100
 
-    context = {'search_results': files_matching}
+    context = {'search_results': files_matching[:100], 'too_many_results': too_many_results}
     return render(request, 'msdn/search_result.html', context)
