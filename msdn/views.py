@@ -49,10 +49,17 @@ def family_list(request):
 
     families = ProductFamily.objects \
         .prefetch_related('group') \
-        .filter(name__istartswith=first_letter).order_by('name') \
-        .annotate(Count('file'))
+        .annotate(Count('file')) \
+        .order_by('name')
 
-    context = {'families': families, 'first_letter': first_letter, 'all_letters': string.ascii_lowercase}
+    if first_letter == '#':
+        families = families.exclude(name__regex=r'^[A-Za-z]')
+    else:
+        families = families.filter(name__istartswith=first_letter)
+
+    all_letters = '#' + string.ascii_lowercase
+
+    context = {'families': families, 'first_letter': first_letter, 'all_letters': all_letters}
     return render(request, 'msdn/family_list.html', context)
 
 def group_detail(request, group_id):
