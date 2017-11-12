@@ -16,15 +16,80 @@
 </style>
 <section class="section container">
     <div class="content">
+        {% if not query %}
+        <p class="has-text-centered is-size-4">
+            Search through the database by product name, file name, or start of the SHA-1 hash.
+        </p>
+        {% endif %}
+
+        <form method="get">
+            <div class="field">
+                <div class="control has-icons-left">
+                    <span class="icon is-left is-large" style="top: .125rem;">
+                        <i class="fa fa-search is-size-5"></i>
+                    </span>
+                    <input type="search" class="input is-medium" name="q" value="{{query}}" />
+                </div>
+            </div>
+        </form>
+
+        {% if query %}
         <h2>Search results</h2>
-        {% if not search_results %}
+        {% if not file_results and not product_results %}
         <p>Nothing found.</p>
         {% else %}
-        {% if too_many_results %}
-        <p>Showing first 100 results.</p>
-        {% else %}
-        <p>Showing {{search_results | length}} results</p>
+
+        {% if product_results %}
+        <h4 class="is-inline-block-tablet">
+            Products
+            <small class="is-block-mobile is-inline-block-tablet" style="font-size: 0.75em;">
+            {% if too_many_product_results %}
+            <p>Showing first 20 results</p>
+            {% else %}
+            <p>Showing {{product_results | length }} results</p>
+            {% endif %}
+            </small>
+        </h4>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Product name</th>
+                    <th>Group</th>
+                    <th class="has-text-right"># of files</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for f in product_results %}
+                <tr>
+                    <th>
+                        <a href="{% url 'family_detail' f.id %}">{{f.name}}</a>
+                    </th>
+                    <td>
+                        <a href="{% url 'group_detail' f.group.id %}">{{f.group.name}}</a>
+                    </td>
+                    <td class="has-text-right">
+                        {{f.file__count}}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
         {% endif %}
+
+        {% if file_results %}
+        <h4 class="is-inline-block-tablet">
+            Files
+            <small class="is-block-mobile is-inline-block-tablet" style="font-size: 0.75em;">
+            {% if too_many_file_results %}
+            <p>Showing first 100 results</p>
+            {% else %}
+            <p>Showing {{file_results | length}} results</p>
+            {% endif %}
+            </small>
+        </h4>
+
         <table class="table">
             <thead>
                 <tr>
@@ -34,7 +99,7 @@
                 </tr>
             </thead>
             <tbody>
-                {% for f in search_results %}
+                {% for f in file_results %}
                 <tr>
                     <td>
                         <a href="{% url 'file_detail' f.id %}">{{f.description}}</a>
@@ -49,6 +114,8 @@
                 {% endfor %}
             </tbody>
         </table>
+        {% endif %}
+        {% endif %}
         {% endif %}
     </div>
 </section>

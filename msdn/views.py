@@ -100,14 +100,29 @@ def file_detail(request, file_id):
 def search_result(request):
     query = request.GET.get('q')
     if not query:
-        files_matching = []
+        return render(request, 'msdn/search_result.html', {query: query})
     else:
-        files_matching = File.objects.filter(Q(sha1_hash__istartswith=query) | Q(file_name__istartswith=query))
+        products_matching = ProductFamily.objects \
+            .filter(name__icontains=query) \
+            .annotate(Count('file')) \
+            .order_by('name')
 
+        files_matching = File.objects.filter(
+            Q(sha1_hash__istartswith=query) |
+            Q(file_name__icontains=query) |
+            Q(description__icontains=query)
+        )
 
     if len(files_matching) == 1:
         return redirect('file_detail', files_matching[0].id)
-    too_many_results = files_matching.count() > 100
 
-    context = {'search_results': files_matching[:100], 'too_many_results': too_many_results}
+    too_many_files = files_matching.count() > 100
+    too_many_products = products_matching.count() > 20
+
+    context = {'file_results': files_matching[:100],
+               'product_results': products_matching[:20],
+               'too_many_file_results': too_many_files,
+               'too_many_product_results': too_many_products,
+               'query': query
+               }
     return render(request, 'msdn/search_result.html', context)
