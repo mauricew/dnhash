@@ -101,7 +101,7 @@ def search_result(request):
     query = request.GET.get('q')
     min_query_length = 2
     if not query:
-        return render(request, 'msdn/search_result.html', {'query': query})
+        return render(request, 'msdn/search_result.html')
     elif len(query) < min_query_length:
         return render(request, 'msdn/search_result.html', {
             'query': query,
