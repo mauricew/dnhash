@@ -1,6 +1,11 @@
 {% extends 'base.html' %}
 {% block title %}{{file.description}} | {% endblock %}
 {% block content %}
+    <style type="text/css">
+        dl dt {
+            font-weight: bold;
+        }
+    </style>
     <section class="section container">
         <nav class="breadcrumb">
             <ul>
@@ -15,7 +20,27 @@
         <div class="content">
             <h3 class="title">{{file.description}}</h3>
             <p class="subtitle">{{file.file_name}}</p>
-            <dl>
+            <table class="table is-bordered is-hoverable is-hidden-mobile">
+                <tr>
+                    <th>SHA1 hash</th>
+                    <td>{{file.sha1_hash | lower }}</td>
+                </tr>
+                <tr>
+                    <th>File size</th>
+                    <td>{{file.size | floatformat:'-3'}} MB</td>
+                </tr>
+                <tr>
+                    <th>Date posted</th>
+                    <td>{{file.posted_date | date:'Y-m-d H:i'}}</td>
+                </tr>
+                {% if file.language is not None %}
+                <tr>
+                    <th>Language</th>
+                    <td>{{file.language.name}}</td>
+                </tr>
+                {% endif %}
+            </table>
+            <dl class="is-hidden-tablet">
                 <dt>SHA1 hash</dt>
                 <dd>{{file.sha1_hash | lower }}</dd>
                 <dt>File size</dt>
