@@ -20,6 +20,15 @@
         <p class="has-text-centered is-size-4">
             Search through the database by product name, file name, or start of the SHA-1 hash.
         </p>
+        {% elif too_short %}
+        <article class="message is-danger">
+          <div class="message-header">
+            <p>Query too short</p>
+          </div>
+          <div class="message-body">
+            Your search query must be at least {{min_length}} characters.
+          </div>
+        </article>
         {% endif %}
 
         <form method="get">
@@ -33,7 +42,7 @@
             </div>
         </form>
 
-        {% if query %}
+        {% if query and not too_short %}
         <h2>Search results</h2>
         {% if not file_results and not product_results %}
         <p>Nothing found.</p>
