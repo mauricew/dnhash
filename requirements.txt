@@ -1,2 +1,2 @@
-Django==1.11.8
-requests==2.18.4
+Django==1.11.20
+requests==2.22.0
