@@ -3,7 +3,7 @@
 {% block content %}
 <section class="section content container">
     <div class="breadcrumb">
-        <a href="{% url 'group_detail' family.group.id %}">&laquo; {{family.group.name}}</a>
+        <a href="{% url 'group_detail' group_id=family.group.id %}">&laquo; {{family.group.name}}</a>
     </div>
 
     <div class="level">
@@ -34,7 +34,7 @@
         {% for file in files %}
             <tr>
                 <td>
-                    <a href="{% url 'file_detail' file.id %}">{{file.description}}</a>
+                    <a href="{% url 'file_detail' file_id=file.id %}">{{file.description}}</a>
                 </td>
                 <td style="white-space: nowrap;">{{file.posted_date | date:'Y-m-d H:i'}}</td>
                 <td class="has-text-right" style="white-space: nowrap;">{{file.size | floatformat:'-3'}} MB</td>
