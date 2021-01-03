@@ -72,10 +72,10 @@
                 {% for f in product_results %}
                 <tr>
                     <th>
-                        <a href="{% url 'family_detail' f.id %}">{{f.name}}</a>
+                        <a href="{% url 'family_detail' family_id=f.id %}">{{f.name}}</a>
                     </th>
                     <td>
-                        <a href="{% url 'group_detail' f.group.id %}">{{f.group.name}}</a>
+                        <a href="{% url 'group_detail' group_id=f.group.id %}">{{f.group.name}}</a>
                     </td>
                     <td class="has-text-right">
                         {{f.file__count}}
@@ -111,7 +111,7 @@
                 {% for f in file_results %}
                 <tr>
                     <td>
-                        <a href="{% url 'file_detail' f.id %}">{{f.description}}</a>
+                        <a href="{% url 'file_detail' file_id=f.id %}">{{f.description}}</a>
                     </td>
                     <td class="overflow-cell">
                         {{f.file_name}}

@@ -13,19 +13,19 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
 from django.contrib import admin
+from django.urls import path
 
 from msdn import views
 
 urlpatterns = [
-    url(r'^$', views.index, name='index'),
-    url(r'^about', views.about, name='about'),
-    url(r'^browse', views.browse_groups, name='browse'),
-    url(r'^search', views.search_result, name='search_result'),
-    url(r'^groups/(?P<group_id>[0-9]+)$', views.group_detail, name='group_detail'),
-    url(r'^families/$', views.family_list, name='family_list'),
-    url(r'^families/(?P<family_id>[0-9]+)$', views.family_detail, name='family_detail'),
-    url(r'^files/(?P<file_id>[0-9]+)$', views.file_detail, name='file_detail'),
-    url(r'^admin/', admin.site.urls),
+    path('', views.index, name='index'),
+    path('about', views.about, name='about'),
+    path('browse', views.browse_groups, name='browse'),
+    path('search', views.search_result, name='search_result'),
+    path('groups/<int:group_id>', views.group_detail, name='group_detail'),
+    path('families/', views.family_list, name='family_list'),
+    path('families/<int:family_id>', views.family_detail, name='family_detail'),
+    path('files/<int:file_id>', views.file_detail, name='file_detail'),
+    path('admin/', admin.site.urls),
 ]

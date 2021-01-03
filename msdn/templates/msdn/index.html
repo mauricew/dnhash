@@ -44,7 +44,7 @@
                 <ul>
                     {% for f in latest_updated_families %}
                     <li>
-                        <a href="{% url 'family_detail' f.id %}">{{f.name}}</a>
+                        <a href="{% url 'family_detail' family_id=f.id %}">{{f.name}}</a>
                     </li>
                     {% endfor %}
                 </ul>
@@ -59,7 +59,7 @@
                     </li>
                     {% for g in groups %}
                     <li>
-                        <a href="{% url 'group_detail' g.id %}">{{g.name}}</a>
+                        <a href="{% url 'group_detail' group_id=g.id %}">{{g.name}}</a>
                     </li>
                     {% endfor %}
                 </ul>

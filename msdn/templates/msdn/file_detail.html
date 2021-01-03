@@ -10,10 +10,10 @@
         <nav class="breadcrumb">
             <ul>
                 <li>
-                    <a href="{% url 'group_detail' file.product_family.group.id %}">{{file.product_family.group.name}}</a>
+                    <a href="{% url 'group_detail' group_id=file.product_family.group.id %}">{{file.product_family.group.name}}</a>
                 </li>
                 <li>
-                    <a href="{% url 'family_detail' file.product_family.id %}">{{file.product_family.name}}</a>
+                    <a href="{% url 'family_detail' family_id=file.product_family.id %}">{{file.product_family.name}}</a>
                 </li>
             </ul>
         </nav>
