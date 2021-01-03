@@ -1,7 +1,10 @@
 import datetime
 import string
+import json
+import os
 from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Max, Count, Q
+from django.contrib import messages
 
 # Create your views here.
 from .models import File, Language, ProductGroup, ProductFamily
@@ -16,11 +19,17 @@ def index(request):
     groups = ProductGroup.objects.order_by("name")
     total_count = File.objects.count()
 
-    fcu_banner_expiration_date = datetime.date(2017, 11, 10)
-    show_fcu_banner = datetime.date.today() < fcu_banner_expiration_date
+    try:
+        msg_file = open(os.path.dirname(__file__) + '/data/messages.json')
+        # Input file should be an array of strings
+        msgs = json.loads(msg_file.read())
+        for msg in msgs:
+            messages.add_message(request, messages.INFO, msg, extra_tags='safe')
+    except Exception as e:
+        # No messages
+        pass
 
     context = {
-        'show_fcu_banner': show_fcu_banner,
         'latest_files': latest_files,
         'latest_updated_families': latest_updated_families,
         'groups': groups, 'total_count': total_count,
