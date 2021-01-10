@@ -1,16 +1,15 @@
 {% extends 'base.html' %}
 {% block content %}
-    {% if show_fcu_banner %}
-    <section class="hero is-info">
-        <div class="hero-body">
-            <div class="container has-text-centered">
-                <h1 class="title">Windows 10 Fall Creators Update</h1>
-                <h2 class="subtitle">
-                    <a href="/families/711?ref=banner">Click here to get file information.</a>
-                </h2>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <div class="notification is-info is-size-4 has-text-centered">
+            <div class="container">
+                {{ message | safe }}
             </div>
-        </div>
-    </section>
+          </div>
+        {% endfor %}
+    </ul>
     {% endif %}
     <section class="hero is-light">
         <div class="hero-body">

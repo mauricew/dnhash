@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <meta name="description" content="Lookup and verify files using their SHA1 hash from the MSDN catalog.">
-    <title>{% block title %}{% endblock %}msdnhash</title>
+    <meta name="description" content="Lookup and verify files provided by Microsoft's subscription catalogs.">
+    <title>{% block title %}{% endblock %}dnhash</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
@@ -24,7 +24,7 @@
         <div class="container">
             <div class="navbar-brand">
                 <a class="navbar-item" href="/" style="font-size:1.25rem;font-weight:600;">
-                    msdnhash
+                    dnhash
                 </a>
                 <a class="navbar-item" href="/browse">
                     Browse
@@ -42,9 +42,9 @@
     {% endblock content %}
     <footer class="footer">
         <div class="container content">
-            &copy;{% now "Y" %} msdnhash.
+            &copy;{% now "Y" %} dnhash.
             This site is in no way affiliated with Microsoft Corporation.
-            <a class="is-block-mobile" href="https://github.com/mauricew/msdnhash" target="_blank">
+            <a class="is-block-mobile" href="https://github.com/mauricew/dnhash" target="_blank">
                 <i class="fa fa-github" style="vertical-align: baseline;"></i> Github
             </a>
         </div>
